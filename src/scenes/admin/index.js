@@ -27,4 +27,4 @@ export const AdminPage = ({ productList, match }) => (
 AdminPage.propTypes = {
   productList: arrayOf(productPropTypes).isRequired
 };
-//srasafs
+//add github
