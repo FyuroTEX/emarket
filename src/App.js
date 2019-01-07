@@ -9,10 +9,10 @@ const getProducts = async () => products;
 
 class App extends Component {
   state = {
-    products: []
+    products: [],
   };
 
- async  componentDidMount() { 
+  async componentDidMount() { 
     const prods = await getProducts();
     this.setState({
       products: prods,
@@ -26,6 +26,7 @@ class App extends Component {
           <Link to={routes.admin}>Admin</Link>
         </p>
         <Route
+          exact
           path={routes.admin}
           render={renderProps => (
             <AdminPage productList={this.state.products} {...renderProps} />
