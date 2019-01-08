@@ -2,6 +2,7 @@ import React from 'react';
 import { productPropTypes } from "../common/propType";
 import styled, {css} from 'styled-components';
 import { arrayOf } from 'prop-types';
+import { routes } from '../routes';
 
 const commonInpytStyles = css`
 display: block;
@@ -15,10 +16,10 @@ ${commonInpytStyles};
 
 `;
 
-const ProductComponent = ({title, id, description, onSubmit, image, price}) => (
+const ProductComponent = ({title, id, description, onChange, onSubmit, image, price}) => (
     <form onSubmit={onSubmit}>
-<InputField name="title" value={title} />
-        <TextArea name="description" value={description}></TextArea>
+<InputField name="title" value={title} onChange={onChange('title')} />
+        <TextArea name="description" value={description} onChange={onChange('description')}></TextArea>
    <button type="submit">Save</button>
     </form>
 );
@@ -36,12 +37,23 @@ export class ProductContainers extends React.Component {
         }
     };
     
+    onChange = (name) => ({ target: { value } }) => {
+        this.setState({
+           [name]: value,
+        });
+    };
     
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.updateProduct(this.state);
+        this.props.history.push(routes.admin);
+    };
+
     render() {
-        return <ProductComponent {...this.state} onSubmit={(e) => {
-            e.preventDefault();
-            console.log('e', e.target);
-        }} />
+        return <ProductComponent {...this.state}
+            onSubmit={this.onSubmit}
+            onChange={this.onChange}
+        />
     };
 }
 ProductContainers.propTypes = {

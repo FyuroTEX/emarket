@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom';
 import { routes } from '../../routes';
 import {  ProductContainers } from '../../components/ProductComponent';
 
-export const AdminPage = ({ productList, match }) => (
+export const AdminPage = ({ productList, match, updateProduct }) => (
     <div>
         <Route
             path={match.path}
@@ -15,7 +15,11 @@ export const AdminPage = ({ productList, match }) => (
                 <ProductLink key={id} id={id} title={title} />
             ))}
         />
-        <Route path={routes.adminProduct} render={(renderProps) => <ProductContainers productList={productList} {...renderProps}/>} />
+        <Route
+            path={routes.adminProduct}
+            render={(renderProps) =>
+                <ProductContainers updateProduct={updateProduct} productList={productList}
+                    {...renderProps} />} />
   </div>
 );
 

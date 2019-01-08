@@ -6,7 +6,7 @@ import { AdminPage } from './scenes/admin';
 import { products } from './data/products';
 
 const getProducts = async () => new Promise(
-  (resolve, reject) => {
+  (resolve) => {
     setTimeout(() => resolve(products), 1000);
   },
 );
@@ -25,6 +25,17 @@ class App extends Component {
     })
   };
 
+  updateProduct = (newProduct) => (
+    this.setState({
+      products: this.state.products.map((oldProduct) => {
+        if (oldProduct.id === newProduct.id) {
+          return newProduct;
+        }
+        return oldProduct;
+      })
+    })
+  );
+
   render() {
     if (this.state.loading) {
       return <h1>Loading...</h1>
@@ -38,7 +49,7 @@ class App extends Component {
           // exact
           path={routes.admin}
           render={renderProps => (
-            <AdminPage productList={this.state.products} {...renderProps} />
+            <AdminPage productList={this.state.products} updateProduct={this.updateProduct} {...renderProps} />
           )}
         />
       </div>
